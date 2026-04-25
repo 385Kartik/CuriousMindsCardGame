@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Answer — Chemistry Cards</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="../logo.png" />
   <style>
     :root {
       --yellow:    #FFD000;
@@ -31,7 +31,6 @@
       align-items: center;
     }
 
-    /* ── Top bar ── */
     .topbar {
       width: 100%;
       background: var(--white);
@@ -87,7 +86,6 @@
       border-radius: 20px;
     }
 
-    /* ── Answer content ── */
     .answer-wrap {
       flex: 1;
       width: 100%;
@@ -132,7 +130,6 @@
       display: block;
     }
 
-    /* ── Navigation ── */
     .nav-row {
       display: flex;
       gap: 10px;
@@ -165,7 +162,6 @@
       line-height: 1.7;
     }
 
-    /* ── Error ── */
     .error-wrap {
       flex: 1;
       display: flex;
@@ -197,7 +193,7 @@
     All Cards
   </a>
   <div class="topbar-logo">
-    <img src="../logo.png" alt="IITians Curious Minds" />
+    <img src="logo.png" alt="IITians Curious Minds" />
   </div>
   <span class="card-badge" id="card-badge">—</span>
 </div>
@@ -210,8 +206,16 @@
   const TOTAL = 39;
 
   function getCardId() {
+    // PRIMARY: read from URL path  /answer/5
+    const pathMatch = window.location.pathname.match(/\/answer\/(\d+)/);
+    if (pathMatch) return parseInt(pathMatch[1], 10);
+
+    // FALLBACK: read from query param  ?id=5
     const params = new URLSearchParams(window.location.search);
-    return parseInt(params.get('id'), 10);
+    const fromQuery = parseInt(params.get('id'), 10);
+    if (!isNaN(fromQuery)) return fromQuery;
+
+    return NaN;
   }
 
   function render(id) {
@@ -240,7 +244,7 @@
         <div class="answer-label">✅ Answer — Card #${id}</div>
 
         <div class="answer-card">
-          <img src="../answers/${id}.jpg" alt="Answer for card ${id}" />
+          <img src="answers/${id}.jpg" alt="Answer for card ${id}" />
         </div>
 
         <p class="hint">Scan the QR code on the physical card to come back here anytime</p>
