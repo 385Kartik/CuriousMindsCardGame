@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemistry Cards — IITians Curious Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --yellow:    #FFD000;
+      --yellow-dk: #E6B800;
+      --yellow-lt: #FFF5CC;
+      --bg:        #FAFAFA;
+      --white:     #FFFFFF;
+      --text:      #1A1A1A;
+      --muted:     #777;
+      --border:    #E8E8E8;
+      --shadow:    0 4px 20px rgba(0,0,0,0.08);
+      --radius:    16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--white);
+      border-bottom: 3px solid var(--yellow);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .logo-wrap img {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+
+    .header-divider {
+      width: 2px;
+      height: 40px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .header-text h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-print {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-print:hover {
+      background: var(--yellow-dk);
+      transform: translateY(-1px);
+    }
+
+    /* ── Hero Banner ── */
+    .hero {
+      background: linear-gradient(135deg, var(--yellow) 0%, #FFE44D 100%);
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero-left h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .hero-left p {
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+      max-width: 400px;
+    }
+
+    .hero-stat {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 16px 28px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .hero-stat .num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .hero-stat .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* ── Grid ── */
+    main {
+      padding: 36px 40px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    /* ── Card ── */
+    .card-wrap {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .card-wrap:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.14);
+      border-color: var(--yellow);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      aspect-ratio: 5 / 7;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── QR Section ── */
+    .qr-section {
+      padding: 14px 16px;
+      border-top: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+    }
+
+    .qr-box {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      background: var(--white);
+      border: 2px solid var(--yellow);
+      border-radius: 10px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box canvas,
+    .qr-box img {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .qr-info .card-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .qr-info p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--white);
+      border-top: 2px solid var(--border);
+      text-align: center;
+      padding: 28px 20px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    footer strong { color: var(--text); }
+
+    @media (max-width: 640px) {
+      header { padding: 16px 20px; gap: 12px; }
+      .hero { padding: 24px 20px; flex-direction: column; gap: 20px; align-items: flex-start; }
+      main { padding: 24px 16px 40px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .header-actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="logo.png" alt="IITians Curious Minds" />
+  </div>
+  <div class="header-divider"></div>
+  <div class="header-text">
+    <h1>Chemistry Question Cards</h1>
+    <p>Scan QR on each card to reveal the answer instantly</p>
+  </div>
+  <div class="header-actions">
+    <a href="print-qr.html" class="btn-print" target="_blank">
+      🖨️ Print All QR Codes
+    </a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-left">
+    <h2>Chemistry Challenge Cards</h2>
+    <p>Each card has a QR code — scan it with your phone to see the answer immediately on this website.</p>
+  </div>
+  <div class="hero-stat">
+    <div class="num">39</div>
+    <div class="label">Question Cards</div>
+  </div>
+</div>
+
+<main>
+  <p class="section-title">All Cards</p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <strong>IITians Curious Minds</strong> &nbsp;·&nbsp; cards.iitianscuriousminds.com
+</footer>
+
+<script>
+  const TOTAL_CARDS = 39;
+  const BASE_URL = window.location.origin;
+  const grid = document.getElementById('grid');
+
+  for (let i = 1; i <= TOTAL_CARDS; i++) {
+    const answerURL = `${BASE_URL}/answer/${i}`;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'card-wrap';
+    wrap.style.animationDelay = `${(i - 1) * 0.035}s`;
+
+    wrap.innerHTML = `
+      <div class="card-img-wrap">
+        <img src="cards/${i}.jpg" alt="Card ${i}" loading="lazy" />
+      </div>
+      <div class="qr-section">
+        <div class="qr-box" id="qr-${i}"></div>
+        <div class="qr-info">
+          <div class="card-num">Card #${i}</div>
+          <p>Scan to reveal<br>the answer</p>
+        </div>
+      </div>
+    `;
+
+    grid.appendChild(wrap);
+
+    setTimeout(() => {
+      new QRCode(document.getElementById(`qr-${i}`), {
+        text: answerURL,
+        width: 60,
+        height: 60,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }, 0);
+  }
+</script>
+</body>
+</html>

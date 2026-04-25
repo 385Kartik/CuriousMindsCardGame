@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/answer/:id", "destination": "/answer.html?id=:id" }
+  ]
+}
